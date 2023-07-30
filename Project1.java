@@ -9,7 +9,7 @@ public class Project1 {
 
     public static void main(String[] args) {
 
-        Scanner gamer = new Scanner(System.in);
+
         ticTacToe = new String[3][3];
         turn = "X";
         String winner = null;
@@ -20,33 +20,21 @@ public class Project1 {
 
 
         int slot;
-
         do {
 
             if (turn == "X"){
 
+                slot = playerInput();
 
                 try {
-                    System.out.println("\n\n Player " + turn + " turns .. choose place from 1-9 \n");
-                    slot = gamer.nextInt();
-
-                    if (!(slot > 0 && slot <= 9)) {
-                        System.out.println("Invalid entry, choose between 1-9");
-                        continue;
-                    }else if (isEmpty(slot)) {
-                        System.out.println("slot is not Available, choose another slot");
-                        continue;
-                    }else {
-                        turn = "O";
-                        printBoard();
-                        winner = checkWinner();
-                    }
-                }catch (InputMismatchException e){
-                    System.out.println("** invalid entry, you should enter a number between 1-9 **");
-                    break;
+                    checkValidity(slot);
+                    checkAvailability(slot);
+                    turn = "O";
+                    printBoard();
+                    winner = checkWinner();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-
-
 
             }
 
@@ -75,6 +63,32 @@ public class Project1 {
 
     }
 
+
+
+    public static int playerInput() {
+        Scanner gamer = new Scanner(System.in);
+        int slot = 0;
+        try {
+            System.out.println("\n\n Player " + turn + " turns .. choose place from 1-9 \n");
+            slot = gamer.nextInt();
+        }catch (InputMismatchException e) {
+            System.out.println("** invalid entry, you should enter a number between 1-9 **");
+        }
+        return slot;
+    }
+
+
+    public static void checkValidity(int input) throws Exception {
+        if (!(input > 0 && input <= 9)) {
+            throw new Exception("Invalid entry, choose between 1-9");
+        }
+    }
+
+    public static void checkAvailability(int input) throws Exception{
+        if (isEmpty(input)) {
+            throw new Exception("slot is not Available, choose another slot");
+        }
+    }
 
     //    method to print board
     public static void printBoard() {
