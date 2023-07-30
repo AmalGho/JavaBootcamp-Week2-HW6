@@ -35,13 +35,13 @@ public class Project1 {
                 try {
                     checkValidity(slot);
                     checkAvailability(slot);
+                    turn = "O";
+                    testPrintBoard();
+                    winner = checkWinner();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
 
-                turn = "O";
-                testPrintBoard();
-                winner = checkWinner();
             }
 
 
@@ -51,9 +51,9 @@ public class Project1 {
                     computer();
                 else {
                     System.out.println("\n\n Player " + turn + " turns .. computer choose " + slot +" \n");
+                    turn = "X";
                     testPrintBoard();
                     winner = checkWinner();
-                    turn = "X";
                 }
             }
 
@@ -209,6 +209,17 @@ public class Project1 {
         }
 
 //        check draw
+        try {
+            return testDraw();
+        }catch (Exception e) {
+            System.out.println("\n\n something went wrong! ");
+        }
+
+        return null;
+    }
+
+
+    public static String testDraw() {
         int counter = 0;
         for (int i = 0; i < ticTacToe.length; i++) {
             for (int j = 0; j < ticTacToe[0].length; j++) {
@@ -227,7 +238,7 @@ public class Project1 {
 
 
     //    method to print the winner
-    static public String printWinner(String winner) {
+    public static String printWinner(String winner) {
         if (winner.equalsIgnoreCase("draw")) {
             return "x_x   it is draw :(   x_x";
         }else return "\\o/ \\o/ \\o/   " + winner + " is the winner :)   \\o/ \\o/ \\o/";
