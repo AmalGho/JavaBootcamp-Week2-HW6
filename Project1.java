@@ -15,8 +15,14 @@ public class Project1 {
         String winner = null;
 
         System.out.println("\n Tic Tac Toe Game :) \n");
-        numberSlots();
-        printBoard();
+
+        try{
+            numberSlots();
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("Something went wrong.. try later :)");
+        }
+
+        testPrintBoard();
 
 
         int slot;
@@ -29,13 +35,13 @@ public class Project1 {
                 try {
                     checkValidity(slot);
                     checkAvailability(slot);
-                    turn = "O";
-                    printBoard();
-                    winner = checkWinner();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
 
+                turn = "O";
+                testPrintBoard();
+                winner = checkWinner();
             }
 
 
@@ -45,9 +51,9 @@ public class Project1 {
                     computer();
                 else {
                     System.out.println("\n\n Player " + turn + " turns .. computer choose " + slot +" \n");
-                    turn = "X";
-                    printBoard();
+                    testPrintBoard();
                     winner = checkWinner();
+                    turn = "X";
                 }
             }
 
@@ -64,7 +70,7 @@ public class Project1 {
     }
 
 
-
+//  manage player X inputs
     public static int playerInput() {
         Scanner gamer = new Scanner(System.in);
         int slot = 0;
@@ -100,6 +106,15 @@ public class Project1 {
             }
             if (i != 2)
                 System.out.println("\n----+------+----");
+        }
+    }
+
+
+    public static void testPrintBoard() {
+        try{
+            printBoard();
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("Something went wrong.. try later :)");
         }
     }
 
