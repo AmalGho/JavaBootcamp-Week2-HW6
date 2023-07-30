@@ -6,31 +6,59 @@ import java.util.Scanner;
 public class EX7 {
 
     static ArrayList<Integer> user_array = new ArrayList<>();
-    static  Scanner scanner = new Scanner(System.in);
     static int arr_size;
 
     public static void main(String[] args) {
-        System.out.println("\n\n Q7 output: ");
-
 
         System.out.println("before start the menu .. enter the size of array you want: ");
         arr_size = userInput();
-        startMenue(arr_size);
+        startMenu();
 
     }
 
+
+//    user input,,,  reusable method
     public static int userInput () {
-        int size = 0;
+        Scanner scanner = new Scanner(System.in);
+        int input = 0;
         try{
-            size = scanner.nextInt();
+            input = scanner.nextInt();
         }catch (InputMismatchException e) {
-            System.out.println("please you should enter number only :)");
+            System.out.println("*** please you should enter number only :) ***");
         }
 
-        return size;
+        return input;
     }
 
-    public static void startMenue(int size) {
+
+//    check if array empty,,,  reusable code
+    public static void checkArray() throws Exception {
+        if (user_array.isEmpty()) {
+            throw new Exception("there is no array,, continue to enter an array");
+        }
+    }
+
+
+//    user fill out the array,,,  reusable code
+    public static void fillArray(int size) {
+        System.out.println("please enter " +size+ " number of the array: ");
+        for (int i = 0; i < size; i++) {
+            user_array.add(userInput());
+        }
+    }
+
+    //    try-catch for empty array,,, reusable code
+    public static void testArray() {
+        try {
+            checkArray();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fillArray(arr_size);
+        }
+    }
+
+    public static void startMenu() {
+        int option;
         do {
             System.out.println("\nPlease select one option: "
                     + "\n 1.Accept elements of an array."
@@ -40,30 +68,17 @@ public class EX7 {
                     + "\n 5.Stop."
                     + "\n\n select now...");
 
-            int option = userInput();
+            option = userInput();
 
 
 
             if (option == 1) {
-                System.out.println("please enter " +arr_size+ " number of the array: ");
-                for (int i = 0; i < arr_size; i++) {
-                    user_array.add(userInput());
-                }
+                testArray();
             } else if (option == 2) {
-                if (user_array.isEmpty()) {
-                    System.out.println("please enter " +arr_size+ " number of the array: ");
-                    for (int i = 0; i < arr_size; i++) {
-                        user_array.add(userInput());
-                    }
-                }
+                testArray();
                 System.out.println("elements of array are: " + user_array);
             } else if (option == 3) {
-                if (user_array.isEmpty()) {
-                    System.out.println("please enter " +arr_size+ " number of the array: ");
-                    for (int i = 0; i < arr_size; i++) {
-                        user_array.add(userInput());
-                    }
-                }
+                testArray();
                 System.out.println("please enter a number to search it in array: ");
                 int search_element = userInput();
                 for ( int e : user_array ){
@@ -71,12 +86,7 @@ public class EX7 {
                         System.out.println("the element is in index " + user_array.indexOf(e));
                 }
             } else if (option == 4) {
-                if (user_array.isEmpty()) {
-                    System.out.println("please enter " +arr_size+ " number of the array: ");
-                    for (int i = 0; i < arr_size; i++) {
-                        user_array.add(userInput());
-                    }
-                }
+                testArray();
                 System.out.println("the origin array: " + user_array);
                 user_array.sort(Comparator.naturalOrder());
                 System.out.println("the sorted array: " + user_array);
@@ -86,4 +96,5 @@ public class EX7 {
             } else System.out.println("invalid entry...");
         }while (true);
     }
+
 }
